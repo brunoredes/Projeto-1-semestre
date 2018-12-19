@@ -1,0 +1,14 @@
+{
+    "database": {
+        "server": "setion.database.windows.net", 
+        "user": "bandtec",
+        "password": "Setion@5",
+        "database": "Setion",
+        "options": {
+            "encrypt": true
+        }
+    },
+    "security": {
+        "key": "CHAVE_SEGURANCA"
+    }
+}

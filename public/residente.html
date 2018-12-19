@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+    <script src="forms.js"></script>
+
+    <!-- Title Page-->
+    <title>Formulário para residentes</title>
+
+    <!-- Icons font CSS-->
+    <link href="vendor2/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor2/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <!-- Fornecedor do CSS-->
+    <link href="vendor2/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor2/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="css/main-forms.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Cadastro de residente</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" id="formCadastroResidente" onsubmit="return cadastrarResidente()">
+                        <div class="form-row m-b-55">
+                            <div class="name">Nome</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="full_name" id="descr" required>
+                                            <label class="label--desc">Nome do residente</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="name">Sintomas</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="sintomas" id="nmResidente"
+                                        required>
+                                    <label class="label--desc">Sintoma respiratório do residente</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="name">Data de Nascimento</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="dataNascimento" id="nmResidente"
+                                        placeholder="AAAA-MM-DD" required>
+                                    <label class="label--desc">Data de Nascimento</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row m-b-55">
+                            <div class="name">CPF</div>
+                            <div class="value">
+                                <div class="row row-refine">
+
+                                    <div class="col-9">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="cpf" id="cpf" maxlength="14"
+                                                OnKeyPress="formatar('###.###.###-##', this)" required>
+                                            <label class="label--desc">Digite o CPF do residente</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div>
+                            <a href="javascript:window.history.go(-1)"> <button class="btn btn--radius-2 btn--blue"
+                                    type="button">Voltar</button></a>
+                        </div><br>
+                        <div>
+                            <button class="btn bton--radius-2 btn--red" type="button" onclick="verificar()" id="btnCpf">Validar
+                                CPF</button>
+                        </div><br>
+                        <div>
+                            <div>
+                                <button class="btn btn--radius-2 btn--green" type="submit" id="btnRegistrarResidente">Registrar</button>
+                            </div><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="vendor2/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="vendor2/select2/select2.min.js"></script>
+    <script src="vendor2/datepicker/moment.min.js"></script>
+    <script src="vendor2/datepicker/daterangepicker.js"></script>
+
+    <!--JS Principal-->
+    <script src="js/global.js"></script>
+
+
+</body> <!-- Este modelo foi produzido pela Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- Fim do documento-->
+
+<script>
+
+    function cadastrarResidente() {
+        $('#btnRegistrarResidente').attr('disabled', 'true');
+
+        var dados = $('#formCadastroResidente').serialize();
+
+        $.ajax({
+            url: "/cadastro/cadastrarResidente",
+            type: 'POST',
+            data: dados
+        })
+            .done(function (resposta) {
+                window.location.href = 'grafico.html';
+            })
+            .fail(function (jqXHR, textStatus) {
+                alert(jqXHR.responseJSON.mensagem);
+                //$('#div_erro').html(jqXHR.responseJSON.mensagem);
+                //$('#div_erro').show();
+            })
+            .always(function () {
+                $('#btnRegistrarResidente').removeAttr('disabled');
+            });
+        return false;
+    }
+</script>

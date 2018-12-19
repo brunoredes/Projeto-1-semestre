@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+    <script src="forms.js"></script>
+
+    <!-- Title Page-->
+    <title>Formulário de registro</title>
+
+    <!-- Icons font CSS-->
+    <link href="vendor2/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor2/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <!-- Fornecedor do CSS-->
+    <link href="vendor2/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor2/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="css/main-forms.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Cadastro</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" id="formCadastro" onsubmit="return cadastrar()">
+                        <div class="form-row m-b-55">
+                            <div class="name">Nome</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="full_name" id="nome" required>
+                                            <label class="label--desc">Nome completo</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">E-mail</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="email" name="email" id="email" required>
+                                    <label class="label--desc">Digite seu e-mail</label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Usuário</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="user" id="usuario" required>
+                                    <label class="label--desc">Digite um nome de usuário</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Senha</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="password" name="password" id="password"
+                                        autocomplete="new-password" spellcheck="false" tabindex="0" autocapitalize="off"
+                                        minlength="8" maxlength="14" required>
+                                    <label class="label--desc">Digite uma senha (máx 14 dígitos)</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="name">Repita a senha</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="password" name="confirm_password" id="confirm_password"
+                                        minlength="8" maxlength="14" onblur="validateSenha()" required>
+                                    <label class="label--desc">Repita sua senha (máx 14 dígitos)</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-row m-b-55">
+                            <div class="name">CPF</div>
+                            <div class="value">
+                                <div class="row row-refine">
+
+                                    <div class="col-9">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="cpf" id="cpf" maxlength="14"
+                                                OnKeyPress="formatar('###.###.###-##', this)" required>
+                                            <label class="label--desc">Digite seu CPF</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button class="btn bton--radius-2 btn--red" type="button" onclick="verificar()" id="btnCpf">Validar CPF</button>
+                        </div><br>
+                        <div>
+                            <button class="btn btn--radius-2 btn--blue" type="submit" id="btnRegistrar">Registrar</button>
+                        </div><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="vendor2/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="vendor2/select2/select2.min.js"></script>
+    <script src="vendor2/datepicker/moment.min.js"></script>
+    <script src="vendor2/datepicker/daterangepicker.js"></script>
+
+    <!--JS Principal-->
+    <script src="js/global.js"></script>
+
+
+</body>     <!-- Este modelo foi produzido pela Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- Fim do documento-->
+
+<script>
+    document.getElementById('cpf').setAttribute('disabled','true');
+    document.getElementById('btnCpf').setAttribute('disabled','true');
+    document.getElementById('btnRegistrar').setAttribute('disabled','true');
+
+    function verificar()
+    {
+        var strCpf = document.getElementById("cpf").value;
+        var valido = TestaCPF(strCpf);
+        if(strCpf == "" || strCpf == null) {
+
+        } 
+        else
+        {
+          if(valido)
+          {
+            alert("Cpf válido");
+            document.getElementById('btnRegistrar').disabled = false;
+          }
+          else
+          {
+            alert("Cpf inválido");
+          }
+        } 
+    }
+
+    function validateSenha()
+    {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+
+        if(password != '' && confirm_password != null)
+        {
+
+            if(validatePassword(password,confirm_password))
+            {
+                document.getElementById('cpf').disabled = false;
+                document.getElementById('btnCpf').disabled = false;
+            }
+            else
+            {
+                alert("As senhas não correspondem!");
+                document.getElementById('cpf').disabled = true;
+                document.getElementById('btnCpf').disabled = true;
+            } 
+        }
+    }
+
+    function cadastrar(){
+        $('#btnRegistrar').attr('disabled','true');
+
+        var dados = $('#formCadastro').serialize();
+
+        $.ajax({
+            url: "/cadastro/cadastrarFuncionario",
+            type: 'POST',
+            data: dados
+        })
+        .done(function(resposta){
+            window.location.href='login.html';
+		})
+		.fail(function(jqXHR, textStatus){ 
+            alert(jqXHR.responseJSON.mensagem);
+			//$('#div_erro').html(jqXHR.responseJSON.mensagem);
+			//$('#div_erro').show();
+		})
+		.always(function(){
+			$('#btnRegistrar').removeAttr('disabled');
+		});
+		return false;
+    }
+</script>
