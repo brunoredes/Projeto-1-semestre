@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var isNull = require('../script').isNull;
-var Database = require('../Database');
+const express = require('express');
+const router = express.Router();
+const isNull = require('../script').isNull;
+const Database = require('../Database');
 const Cryptr = require('cryptr');
 const config = require('../config');
 const cryptr = new Cryptr(config.security.key);
@@ -13,8 +13,7 @@ router.post('/', (req, res, next) => {
 	try {
 			
 		// após o body, são os nomes dos campos no formulário	
-		var login = req.body.login;
-		var senha = req.body.senha;
+		const {login, senha} = req.body;
 		
 		const msgErro = {'mensagem': 'Login e/ou senha inválidos!'};
 		

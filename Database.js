@@ -1,31 +1,29 @@
 'use strict';
-var config = require("./config").database;
-var isNull = require('./script').isNull;
+const config = require("./config").database;
+const isNull = require('./script').isNull;
+const sql = require('mssql');
 
 module.exports = {
-	'query': function(queryString) {
-        if (isNull(queryString)) {
-            return null;
-        } else {
-            var sql = require('mssql');
-            sql.close();
-        	return new Promise((resolve, reject) => {
-                console.log('Establishing connection to Database...')
-                sql.connect(config).then(pool => {
-                    console.log('Connected to Database!');
-                    return pool.request().query(queryString);
-                }).then(results => {
-                    console.log('Query succeded!');
-                    console.log('Closing connection...');
-                    sql.close();
-                    resolve(results);
-                }).catch(error => {
-                    console.log('Error executing query :(', error);
-                    console.log('Closing connection...');
-                    sql.close();
-                    reject(error);
+	query: async (queryString) => {
+        return new Promise((resolve, reject) => {
+            if(isNull(queryString)){
+                return reject({
+                    message: "queryString is required!",
                 });
-            });
-        }
+            }
+
+            console.log('Establishing connection to Database...')
+            try{
+                const pool = await sql.connect(config);
+                console.log('Connected to Database!');
+                const res = await pool.request().query(queryString);
+                console.log('Query succeded!');
+                return resolve(res);
+            }
+            catch(err){
+                console.log(`Error executing query`);
+                return reject(err);
+            }
+        });
     }
 };
